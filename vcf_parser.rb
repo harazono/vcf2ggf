@@ -23,16 +23,21 @@ if ARGV.size > 0 then
 			f.each_line do |line|
 				from_chr = line.split("\t")[0]
 				from_pos = line.split("\t")[1]
-				to_chr = line.split("\t")[7].split(";")[2].split("=")[1]
-				to_pos = line.split("\t")[7].split(";")[3].split("=")[1]
-				svtype = line.split("\t")[7].split(";")[8].split("=")[1]
-				svlen  = line.split("\t")[7].split(";")[10].split("=")[1]
-				strand = line.split("\t")[7].split(";")[11].split("=")[1]
+				info = line.split("\t")[7]
+				to_chr = info.split(";")[2].split("=")[1]
+				to_pos = info.split(";")[3].split("=")[1]
+				svtype = info.split(";")[8].split("=")[1]
+				svlen  = info.split(";")[10].split("=")[1]
+				strand = info.split(";")[11].split("=")[1]
 				strand_1 = strand.split("")[0]
 				strand_2 = strand.split("")[1]
-				priority = 0
-				print svtype, "\t", strand_1, "\t", strand_2, "\n"
-				#print from_chr, ",", from_pos, ",", strand_1, ",", to_chr, ",", to_pos, ",", strand_2, ",", priority, ",", svtype, "\n"
+				insstring = info.split(";").find{|x| x.split("=")[0].eql?("SEQ")}
+				priority = info.split(";").find{|x| x.split("=")[0].eql?("RE")}.split("=")[1]
+				if insstring != nil then
+					insstring = insstring.split("=")[1]
+				end
+				print from_chr, ",", from_pos, ",", strand_1, ",", to_chr, ",", to_pos, ",", strand_2, ",", priority, ",", svtype, ",", insstring, "\n"
+
 			end
 		end
 	end
