@@ -1,3 +1,7 @@
 r95_merged.sorted_*
 *.fa
 *.fasta
+svtype_uniq_list.txt
+chromFa.tar.gz
+hg19*
+*.ggf
