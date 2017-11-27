@@ -7,42 +7,35 @@ if ARGV.size < 2 then
 	exit(1)
 end
 
-
 raw_sv_list = []
 CSV.foreach(ARGV[0]) do |row|
 	raw_sv_list.push(row)
 end
 
-=begin
-File.open(ARGV[1], "r") do |ref_file|
-	reference = Bio::FlatFile.auto(ref_file)
-	reference.each{|each_chr|
-		chr.push([each_chr.entry_id, each_chr.seq.to_str])
-	}
-end
-=end
 
+#get all break points and store in "bp_list"
+#bp_list contains chr and locus
+#{chr, [###,###,###,###,...,###]}
 bp_list = Hash.new {|h,k| h[k] = []}
-
 raw_sv_list.each{|each_sv|
 	bp_list.store(each_sv[0], bp_list[each_sv[0]].push(each_sv[1].to_i))
 	bp_list.store(each_sv[3], bp_list[each_sv[3]].push(each_sv[4].to_i))
-=begin
-	if each_sv[7] == "DEL"
-		seq = "#{each_sv[0]}:#{each_sv[1].to_i}-#{each_sv[4].to_i}"
-		segment = `samtools faidx #{ARGV[1]} #{seq}`
-		#segment.split("\n").drop(1).join("").upcase.length
-	end
-	if each_sv[7] == "INS"
-		seq = "#{each_sv[0]}:#{each_sv[1].to_i}-#{each_sv[4].to_i}"
-		segment = `samtools faidx #{ARGV[1]} #{seq}`
-		#segment.split("\n").drop(1).join("").upcase.length
-	end
-=end
 }
-#bp_list contains chr and locus
-#{chr, [###,###,###,###,...,###]}
+
+
+#show SV's breakpoints as uniq_id(in each chromosome)
+sv_list = []
+raw_sv_list.each{|each_sv|
+	chr_bp_list1 = bp_list[each_sv[0]].sort
+	chr_bp_list2 = bp_list[each_sv[3]].sort
+	sv_list.push([each_sv[0], chr_bp_list1.find_index{|n| n == each_sv[1].to_i}, each_sv[2], each_sv[3], chr_bp_list2.find_index{|n| n == each_sv[4].to_i}, each_sv[5], each_sv[6].to_i, each_sv[7], each_sv[8]])
+}
+
+# cut reference sequence, make Segments and connect Segments with Link.
+# build reference graph genome
 uniq_id = 0
+ref_segment_name_list = ""
+ref_cigar_list = ""
 bp_list.each{|list|
 	list[1] = list[1].sort
 	pre_bp = 0
@@ -57,16 +50,13 @@ bp_list.each{|list|
 		end
 		seq = "#{list[0]}:#{pre_bp}-#{nxt_bp}"
 		segment = `samtools faidx #{ARGV[1]} #{seq}`
-		#puts segment.split("\n").drop(1).join("").upcase
 		puts "S\t#{uniq_id}\t#{segment.split("\n").drop(1).join("").upcase}"
+		puts "L\t#{uniq_id}\t+\t#{uniq_id + 1}\t+\t0M"
+		ref_segment_name_list << uniq_id.to_s << "+,"
+		ref_cigar_list << "0M,"
 		uniq_id = uniq_id + 1
-		puts "L\t#{i}\t+\t#{i + 1}\t+\t0M"
-		
-		#p segment.split("\n").drop(1).join("").upcase
 		i = i + 1
 	end
-	#p list[1][list[1].length]
 }
-bp_list.each{|list|
+puts "P\tref\t#{ref_segment_name_list.chop}\t#{ref_cigar_list.chop}"
 
-}
