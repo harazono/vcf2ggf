@@ -61,6 +61,7 @@ bp_list.each{|list|
 		puts "S\t#{uniq_id}\t#{segment.split("\n").drop(1).join("").upcase}"
 		uniq_id = uniq_id + 1
 		puts "L\t#{i}\t+\t#{i + 1}\t+\t0M"
+		
 		#p segment.split("\n").drop(1).join("").upcase
 		i = i + 1
 	end

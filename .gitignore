@@ -5,3 +5,6 @@ svtype_uniq_list.txt
 chromFa.tar.gz
 hg19*
 *.ggf
+*zura*
+*hoge*
+sv_chr20.pcf
