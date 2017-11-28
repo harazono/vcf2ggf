@@ -8,8 +8,8 @@ if ARGV.size < 2 then
 end
 
 raw_sv_list = []
-CSV.foreach(ARGV[0]) do |row|
-	raw_sv_list.push(row)
+CSV.foreach(ARGV[0], {headers: true}) do |row|
+	raw_sv_list.push(row) if row[0].start_with?("#") == false
 end
 
 bp_list = Hash.new {|h,k| h[k] = []}
@@ -70,11 +70,11 @@ bp_list.each{|list|
 		puts "S\t#{uniq_id}\t#{segment.split("\n").drop(1).join("").upcase}"
 		puts "L\t#{uniq_id}\t+\t#{uniq_id + 1}\t+\t0M"
 		ref_segment_name_list << uniq_id.to_s << "+,"
-		ref_cigar_list << "#{segment.length},"
+		ref_cigar_list << "#{segment.length}M,"
 		uniq_id = uniq_id + 1
 		i = i + 1
 	end
-	puts "P\t#{list[0]}\t#{ref_segment_name_list.chop}\t#{ref_cigar_list.chop}"
+	puts "P\t#{list[0]}\t#{ref_segment_name_list.chop}"
 	#now reference genome's Path was added!
 }
 
@@ -89,7 +89,7 @@ sv_list.each{|list|
 		from_seg = list[1] + 1#bp_uniq_id_list[list[0]].key(list[1])
 		to_seg = list[4] + 1#bp_uniq_id_list[list[3]].key(list[4])
 		puts "L\t#{from_seg}\t+\t#{to_seg}\t+\t0M"
-		puts "P\tDEL_#{del_uid}\t#{from_seg}+,#{to_seg}+\t0M"
+		puts "P\tDEL_#{del_uid}\t#{from_seg}+,#{to_seg}+"#need to add segment length
 		del_uid = del_uid + 1
 	when "INS" #need to check which side INS sequence will be inserted.right side of breakpoint or left side of break point
 		puts "S\t#{uniq_id}\t#{list[8].strip}"
@@ -99,7 +99,7 @@ sv_list.each{|list|
 		ins_seg = uniq_id
 		puts "L\t#{from_seg}\t+\t#{ins_seg}\t+\t0M"
 		puts "L\t#{ins_seg}\t+\t#{to_seg}\t+\t0M"
-		puts "P\tINS_#{ins_uid}\t#{from_seg}+,#{ins_seg}+,#{to_seg}+\t0M,0M"
+		puts "P\tINS_#{ins_uid}\t#{from_seg}+,#{ins_seg}+,#{to_seg}+"
 		ins_uid = ins_uid + 1
 	when "INV"
 		from_seg = list[1] + 1#bp_uniq_id_list[list[0]].key(list[1])
@@ -119,7 +119,7 @@ sv_list.each{|list|
 		seg_name << (from_seg + 1).to_s << "-," << (to_seg + 1).to_s << "+"
 		cigar_name << "0M"
 		puts "L\t#{from_seg + 1}\t-\t#{to_seg + 1}\t+\t0M"
-		puts "P\tINV_#{inv_uid}\t#{seg_name}\t#{cigar_name}"
+		puts "P\tINV_#{inv_uid}\t#{seg_name}\t"
 		inv_uid = inv_uid + 1
 	when "DUP"
 		#puts "DUP"

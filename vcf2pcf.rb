@@ -19,7 +19,8 @@ if ARGV.size > 0 then
 		while f.gets[0].strip == "#" do
 			f.gets
 		end
-		if fileformat.split("v")[1].strip == "4.2" then ##vcf4.2. for snifles 
+		if fileformat.split("v")[1].strip == "4.2" then ##vcf4.2. for snifles
+			puts "source_id,source_breakpoint,source_strand,target_id,target_breakpoint,target_strand,priority,svtype,sequence"
 			f.each_line do |line|
 				from_chr = line.split("\t")[0]
 				from_pos = line.split("\t")[1]
