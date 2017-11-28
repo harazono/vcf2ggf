@@ -22,18 +22,6 @@ bp_list.each{|list|
 }
 
 
-=begin
-#bp_list contains breakpoint array(sorted)
-bp_list = []
-raw_sv_list.each{|each_sv|
-	bp_list.push([each_sv[0], each_sv[1].to_i])
-	bp_list.push([each_sv[3], each_sv[4].to_i])
-}
-bp_list.sort_by!{|a, b| b}
-p bp_list
-=end
-
-
 #chr 1 <S1>bp1<S2>bp2<S3>
 #chr 2 <S4>bp1<S5>bp2<S6>bp3<S7>
 #get all break points and store in bp_uniq_id_list
