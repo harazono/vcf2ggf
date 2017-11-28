@@ -7,6 +7,8 @@ if ARGV.size < 2 then
 	exit(1)
 end
 
+puts "H\tVN:Z:1.0"
+
 raw_sv_list = []
 CSV.foreach(ARGV[0], {headers: true}) do |row|
 	raw_sv_list.push(row) if row[0].start_with?("#") == false
