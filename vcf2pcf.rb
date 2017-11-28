@@ -38,7 +38,6 @@ if ARGV.size > 0 then
 				end
 				print from_chr, ",", from_pos, ",", strand_1, ",", to_chr, ",", to_pos, ",", strand_2, ",", priority, ",", svtype, ",", insstring, "\n"
 				insstring = ""
-
 			end
 		end
 	end
