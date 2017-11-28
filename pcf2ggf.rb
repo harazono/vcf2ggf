@@ -70,7 +70,7 @@ bp_list.each{|list|
 		puts "S\t#{uniq_id}\t#{segment.split("\n").drop(1).join("").upcase}"
 		puts "L\t#{uniq_id}\t+\t#{uniq_id + 1}\t+\t0M"
 		ref_segment_name_list << uniq_id.to_s << "+,"
-		ref_cigar_list << "0M,"
+		ref_cigar_list << "#{segment.length},"
 		uniq_id = uniq_id + 1
 		i = i + 1
 	end
