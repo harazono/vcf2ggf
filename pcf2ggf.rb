@@ -94,15 +94,17 @@ sv_list.each{|list|
 		puts "P\tDEL_#{del_uid}\t#{from_seg}+,#{to_seg}+"#need to add segment length
 		del_uid = del_uid + 1
 	when "INS" #need to check which side INS sequence will be inserted.right side of breakpoint or left side of break point
-		puts "S\t#{uniq_id}\t#{list[8].strip}"
-		uniq_id = uniq_id + 1
-		from_seg = list[1] + 1#bp_uniq_id_list[list[0]].key(list[1])
-		to_seg = list[4] + 1#bp_uniq_id_list[list[3]].key(list[4]) + 1
-		ins_seg = uniq_id
-		puts "L\t#{from_seg}\t+\t#{ins_seg}\t+\t0M"
-		puts "L\t#{ins_seg}\t+\t#{to_seg}\t+\t0M"
-		puts "P\tINS_#{ins_uid}\t#{from_seg}+,#{ins_seg}+,#{to_seg}+"
-		ins_uid = ins_uid + 1
+		if list[8] != nil
+			puts "S\t#{uniq_id}\t#{list[8].strip}"
+			uniq_id = uniq_id + 1
+			from_seg = list[1] + 1#bp_uniq_id_list[list[0]].key(list[1])
+			to_seg = list[4] + 1#bp_uniq_id_list[list[3]].key(list[4]) + 1
+			ins_seg = uniq_id
+			puts "L\t#{from_seg}\t+\t#{ins_seg}\t+\t0M"
+			puts "L\t#{ins_seg}\t+\t#{to_seg}\t+\t0M"
+			puts "P\tINS_#{ins_uid}\t#{from_seg}+,#{ins_seg}+,#{to_seg}+"
+			ins_uid = ins_uid + 1
+		end
 	when "INV"
 		from_seg = list[1] + 1#bp_uniq_id_list[list[0]].key(list[1])
 		to_seg = list[4] + 1#bp_uniq_id_list[list[3]].key(list[4]) + 1
@@ -129,11 +131,3 @@ sv_list.each{|list|
 		#puts "other"
 	end
 }
-
-
-
-
-
-
-
-
