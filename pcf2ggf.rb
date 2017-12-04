@@ -89,7 +89,8 @@ sv_list.each{|list|
 	case list[7]
 	when "DEL"
 		from_seg = list[1] + 1#bp_uniq_id_list[list[0]].key(list[1])
-		to_seg = list[4] + 1#bp_uniq_id_list[list[3]].key(list[4])
+		to_seg = list[4] + 2#bp_uniq_id_list[list[3]].key(list[4])
+		#puts "#{bp_uniq_id_list[list[0]].key(list[1])}\t#{bp_uniq_id_list[list[3]].key(list[4])}"
 		puts "L\t#{from_seg}\t+\t#{to_seg}\t+\t0M"
 		puts "P\tDEL_#{del_uid}\t#{from_seg}+,#{to_seg}+"#need to add segment length
 		del_uid = del_uid + 1
@@ -97,7 +98,7 @@ sv_list.each{|list|
 		if list[8] != nil
 			puts "S\t#{uniq_id}\t#{list[8].strip}"
 			uniq_id = uniq_id + 1
-			from_seg = list[1] + 1#bp_uniq_id_list[list[0]].key(list[1])
+			from_seg = list[1] + 2#bp_uniq_id_list[list[0]].key(list[1])
 			to_seg = list[4] + 1#bp_uniq_id_list[list[3]].key(list[4]) + 1
 			ins_seg = uniq_id
 			puts "L\t#{from_seg}\t+\t#{ins_seg}\t+\t0M"
@@ -107,7 +108,7 @@ sv_list.each{|list|
 		end
 	when "INV"
 		from_seg = list[1] + 1#bp_uniq_id_list[list[0]].key(list[1])
-		to_seg = list[4] + 1#bp_uniq_id_list[list[3]].key(list[4]) + 1
+		to_seg = list[4] + 2#bp_uniq_id_list[list[3]].key(list[4]) + 1
 		seg_name = ""
 		cigar_name = ""
 		tmpcnt = to_seg
@@ -131,3 +132,5 @@ sv_list.each{|list|
 		#puts "other"
 	end
 }
+
+

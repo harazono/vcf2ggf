@@ -1,5 +1,5 @@
 # vcf2ggf
-This is vcf to ggf convertor.
+This is vcf to ggf convertor(under developing).
 # usage
 1st.
 ```

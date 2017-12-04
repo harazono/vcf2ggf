@@ -11,4 +11,5 @@ sv_chr20.*
 NA12878*
 *.pcf
 *.vcf
-rel3_2x.vcf
+analysis.rb
+
