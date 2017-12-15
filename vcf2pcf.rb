@@ -63,6 +63,7 @@ File.open(ARGV[0], "r") do |f|
 				end
 			end
 		end
-	print chr1, ",", pos1, ",", str1, ",", chr2, ",", pos2, ",", str2, ",", priority, ",", type, "\n"
+	print chr1, ",", pos1, ",", str1, ",", chr2, ",", pos2, ",", str2, ",", priority, ",", type,",", seq, "\n"
+	seq = ""
 	end
 end
