@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-#require 'bio'
 require 'csv'
 
 if ARGV.size < 2 then
