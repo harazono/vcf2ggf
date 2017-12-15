@@ -16,3 +16,4 @@ rel3/
 hg19/
 ins_ex*
 .DS_Store
+.gitignore
