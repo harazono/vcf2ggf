@@ -19,13 +19,12 @@ end
 File.open(ARGV[0], "r") do |f|
 	line = f.gets
 	if line.split("=")[1].strip != "VCFv4.2" then
-		puts "input VCFv4.2 format file"
+		STDERR.puts "input VCFv4.2 format file"
 		exit(1)
 	end
 	line = f.gets
 	if line.split("=")[1].strip != "Sniffles" then
-		puts "input VCFv4.2 from Sniffles"
-		exit(1)
+		STDERR.puts "input VCFv4.2 created by Sniffles"
 	end
 	while line[0] == "#" && line.split("\t")[0] != "#CHROM"
 		line = f.gets
@@ -37,6 +36,7 @@ File.open(ARGV[0], "r") do |f|
 	str2 = ""
 	seq = ""
 	type = ""
+	uid = 0
 	priority = nil
 	f.each_line do |line|
 		list = line.strip.split("\t")
@@ -63,7 +63,8 @@ File.open(ARGV[0], "r") do |f|
 				end
 			end
 		end
-	print chr1, ",", pos1, ",", str1, ",", chr2, ",", pos2, ",", str2, ",", priority, ",", type,",", seq, "\n"
+	print uid, ",", chr1, ",", pos1, ",", str1, ",", chr2, ",", pos2, ",", str2, ",", priority, ",", type,",", seq, "\n"
 	seq = ""
+	uid = uid + 1
 	end
 end

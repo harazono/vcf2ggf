@@ -1,5 +1,6 @@
 # vcf2ggf
 This is vcf to ggf convertor(under developing).
+you need samtools
 # usage
 1st.
 ```
