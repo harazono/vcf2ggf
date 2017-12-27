@@ -29,7 +29,7 @@ File.open(ARGV[0], "r") do |f|
 	while line[0] == "#" && line.split("\t")[0] != "#CHROM"
 		line = f.gets
 	end
-	puts "source_id,source_breakpoint,source_strand,target_id,target_breakpoint,target_strand,priority,svtype,sequence"
+	puts "uniq_id,source_id,source_breakpoint,source_strand,target_id,target_breakpoint,target_strand,priority,svtype,sequence"
 	str1 = ""
 	chr2 = ""
 	pos2 = ""
