@@ -1,6 +1,7 @@
 r95_merged.sorted_*
 *.fa
 *.fasta
+*.fai
 svtype_uniq_list.txt
 chromFa.tar.gz
 *.ggf
@@ -17,4 +18,6 @@ hg19/
 hg38/
 ins_ex*
 .DS_Store
-
+sample*
+refmaker.rb
+svmaker.rb

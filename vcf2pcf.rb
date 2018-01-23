@@ -13,18 +13,18 @@
 #chr9,13643427,+,chr9,32391692,+,0,TRA,,,id3
 #chr9,24354925,+,chr9,33924070,+,0,TRA,,,id4
 if ARGV.size < 1 || ARGV[0].split(".")[-1] != "vcf" then
-	puts "vcf2pcf.rb <xxx.vcf>"
-	exit(1)
+	STDERR.puts "vcf2pcf.rb <xxx.vcf>"
+	#exit(1)
 end
 File.open(ARGV[0], "r") do |f|
 	line = f.gets
 	if line.split("=")[1].strip != "VCFv4.2" then
-		STDERR.puts "input VCFv4.2 format file"
-		exit(1)
+		STDERR.puts "please input VCFv4.2 format file"
+		#exit(1)
 	end
 	line = f.gets
 	if line.split("=")[1].strip != "Sniffles" then
-		STDERR.puts "input VCFv4.2 created by Sniffles"
+		STDERR.puts "please input VCFv4.2 created by Sniffles"
 	end
 	while line[0] == "#" && line.split("\t")[0] != "#CHROM"
 		line = f.gets
